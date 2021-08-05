@@ -5,35 +5,29 @@ import math, argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--action", dest="action", default="create", help="'create' for create new list | 'print' for print list")
 parser.add_argument("--max", dest="max", default="100", help="Max value for 2D-List")
-parser.add_argument("--length", dest="inn", default="5", help="Inner list length")
-parser.add_argument("--append", dest="a", default="w", help="Append to new line\nDefault is 'w' | Write and overwrite data if data exists | 'a' for append")
+parser.add_argument("--length", dest="inner", default="5", help="Inner list length")
+parser.add_argument("--append", dest="append", default="w", help="Append to new line\nDefault is 'w' | Write and overwrite data if data exists | 'a' for append")
 parser.add_argument("--file", dest="file", default="list", help="File name for 2D-List")
 args = parser.parse_args()
 
 
-mx = int(args.max)
-inn = int(args.inn)
+max = int(args.max)
+length = int(args.inner)
 file_name = args.file + '.txt'
 action = args.action
 
 
 def create_list():
     data = []
-    data_inner = []
     count = 1
-    vl = 1
-    for _ in range(1, math.ceil(mx/inn)+1):
-        for val in range(vl, mx+1):
-            if count > inn:
-                continue
-            data_inner.append(val)
+
+    for outer in range(1, math.ceil(max/length)+1):
+        data.append([])
+        for _ in range(1, length+1):
+            data[outer-1].append(count)
             count += 1
-            vl = val + 1
-        data.append(data_inner)
-        data_inner = []
-        count = 1
     try:
-        with open(file_name, args.a) as file:
+        with open(file_name, args.append) as file:
             file.write(f"{data}\n")
     except Exception as e:
         print("Error:", e)
