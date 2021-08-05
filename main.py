@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--action", dest="action", default="write", help="'create' for create new list | 'print' for print list")
 parser.add_argument("--max", dest="max", default="10", help="Max value for 2D-List")
 parser.add_argument("--len", dest="inner", default="2", help="Inner list length")
-parser.add_argument("--append", dest="append", default="w", help="Append to new line\nDefault is 'w' | Write and overwrite data if data exists | 'a' for append")
+parser.add_argument("--append", dest="append", default="n", help="Append to new [y/n]")
 parser.add_argument("--file", dest="file", default="list", help="File name for 2D-List")
 args = parser.parse_args()
 
@@ -20,7 +20,6 @@ action = args.action
 def create_list():
     data = []
     count = 1
-
     for outer in range(1, math.ceil(max/length)+1):
         data.append([])
         for _ in range(1, length+1):
@@ -29,7 +28,11 @@ def create_list():
             data[outer-1].append(count)
             count += 1
     try:
-        with open(file_name, args.append) as file:
+        append = "w"
+        if args.append == "y":
+            append = "a"
+        
+        with open(file_name, append) as file:
             file.write(f"{data}\n")
     except Exception as e:
         print("Error:", e)
