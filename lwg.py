@@ -14,6 +14,8 @@ args = parser.parse_args()
 mx = int(args.max)
 inn = int(args.inn)
 file_name = args.file + '.txt'
+action = args.action
+
 
 def create_list():
     data = []
@@ -37,22 +39,25 @@ def create_list():
         print("Error:", e)
 
 
+def command_handler():
+    if action == "write":
+        create_list()
+    else:
+        act = ""
+        if action == "print":
+            act = "r"
+        elif action == "clear":
+            act = "w"
+        with open(file_name, act) as file:
+            if act == "r":
+                print(file.read())
+            elif act == "w":
+                file.write("")
+
+
 def main():
     try:
-        if args.action == "write":
-            create_list()
-        else:
-            act = ""
-            if args.action == "print":
-                act = "r"
-            elif args.action == "clear":
-                act = "w"
-
-            with open(file_name, act) as file:
-                if act == "r":
-                    print(file.read())
-                elif act == "w":
-                    file.write("")
+        command_handler()
     except Exception as e:
         print("Error:", e)
 
