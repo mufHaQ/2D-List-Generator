@@ -16,15 +16,19 @@ parser.add_argument("--clear", action="store_true", help="Clear list from file")
 args = parser.parse_args()
 
 
-max = int(args.max)
-length = int(args.inner)
-file_name = args.file + '.txt'
+file_name = ""
+if '.' in args.file:
+    file_name = args.file
+else:
+    file_name = args.file + '.txt'
 
 
 def create_list():
     data = []
     count = 1
     append = ""
+    max = int(args.max)
+    length = int(args.inner)
     for outer in range(1, math.ceil(max/length)+1):
         data.append([])
         for _ in range(1, length+1):
