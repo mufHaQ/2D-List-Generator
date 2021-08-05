@@ -2,7 +2,6 @@
 
 import math
 import argparse
-from os import access
 
 
 parser = argparse.ArgumentParser(formatter_class=argparse.RawTextHelpFormatter)
